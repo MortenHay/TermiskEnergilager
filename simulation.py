@@ -90,13 +90,6 @@ def eulersMethod(de, x0: float, y0: float, h: float, xn: float, *args):
 
 
 # %% Main code
-# Plot of total thermal resistance depending on insolation thickness
-# p1 = sp.plotting.plot(
-#     resistance_total.subs({lid: side, bottom: side}),
-#     (side, 0, 1),
-#     xlabel="Tykkelse [m]",
-#     ylabel="R [K/W]",
-# )
 
 # Thermal resistance and heat capacity for simulation
 Resistance_test = resistance_total.subs({lid: side, bottom: side, side: 0.1})
@@ -119,22 +112,17 @@ t, T = eulersMethod(
     Resistance_test,
     heat_capacity,
 )
-df_sim = pd.DataFrame({"t": t, "T": T})
 
-# Data processing
-plt.plot(df_sim["t"] / 3600, df_sim["T"], label="Tank temperature")
-plt.axhline(
-    y=outside_temperature,
-    color="orange",
-    linestyle="dashed",
-    xmax=end_time,
-    label="Outside Temperature",
-)
-plt.xlabel("Time [h]")
-plt.ylabel("Temperature [C]")
-plt.title("Cooling of thermal storage tank")
-plt.grid()
-plt.legend()
-plt.tight_layout()
+# %% Export data
+df_sim = pd.DataFrame({"t": t, "T": T})
+df_sim.set_index("t").to_csv("sim.csv")
+
+df_param = pd.DataFrame(columns=["param", "val"])
+df_param.loc[len(df_param)] = ["start_time", start_time]
+df_param.loc[len(df_param)] = ["start_temperature", start_temperature]
+df_param.loc[len(df_param)] = ["step_size", step_size]
+df_param.loc[len(df_param)] = ["end_time", end_time]
+df_param.loc[len(df_param)] = ["outside_temperature", outside_temperature]
+df_param.set_index("param").to_csv("param.csv")
 
 # %%

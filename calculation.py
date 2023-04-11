@@ -42,7 +42,7 @@ resistance_total = 1 / (
     1 / resistance_total_bottom + 1 / resistance_total_side + 1 / resistance_total_lid
 )
 
-# %% Main code
+# %% Main code. Mostly just random calculations
 # Plot of total thermal resistance depending on insolation thickness
 p1 = sp.plotting.plot(
     resistance_total.subs({lid: side, bottom: side}),
