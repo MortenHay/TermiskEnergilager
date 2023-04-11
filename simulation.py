@@ -5,17 +5,16 @@ import pandas as pd
 import sympy as sp
 
 # %% Load data
+df_vars = pd.read_csv("physicalData.csv")
+df_vars = df_vars.set_index("var")
 
-# %% Physical constants
-innerBucket_height = 0.14  # m
-innerBucket_radius = 0.085  # m
-conduction_rockwool = 35e-3  # W/mK
-
-convection_lid = 25  # W(m2*K)
-convection_side = 10  # W(m2*K)
-convection_bottom = 5  # W(m2*K)
-
-specific_heat_water = 4180  # J/(kg*K)
+innerBucket_height = df_vars.loc["innerBucket_height"]["val"]
+conduction_rockwool = df_vars.loc["conduction_rockwool"]["val"]
+convection_lid = df_vars.loc["convection_lid"]["val"]
+convection_side = df_vars.loc["convection_side"]["val"]
+innerBucket_radius = df_vars.loc["innerBucket_radius"]["val"]
+convection_bottom = df_vars.loc["convection_bottom"]["val"]
+specific_heat_water = df_vars.loc["specific_heat_water"]["val"]
 
 # %% Resistance equation
 side = sp.Symbol("s")
