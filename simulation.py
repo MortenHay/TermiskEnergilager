@@ -10,6 +10,7 @@ df_vars = df_vars.set_index("var")
 
 innerBucket_height = df_vars.loc["innerBucket_height"]["val"]
 conduction_rockwool = df_vars.loc["conduction_rockwool"]["val"]
+conduction_glasswool = df_vars.loc["conduction_glasswool"]["val"]
 convection_lid = df_vars.loc["convection_lid"]["val"]
 convection_side = df_vars.loc["convection_side"]["val"]
 innerBucket_radius = df_vars.loc["innerBucket_radius"]["val"]
