@@ -12,6 +12,7 @@ innerBucket_height = df_vars.loc["innerBucket_height"]["val"]
 outerBucket_height = df_vars.loc["outerBucket_height"]["val"]
 conduction_rockwool = df_vars.loc["conduction_rockwool"]["val"]
 conduction_glasswool = df_vars.loc["conduction_glasswool"]["val"]
+conduction_PP = df_vars.loc["conduction_PP"]["val"]
 convection_lid = df_vars.loc["convection_lid"]["val"]
 convection_side = df_vars.loc["convection_side"]["val"]
 innerBucket_radius = df_vars.loc["innerBucket_radius"]["val"]
@@ -21,11 +22,11 @@ specific_heat_water = df_vars.loc["specific_heat_water"]["val"]
 
 # %% Resistance equation
 side = sp.Symbol("s")
-resistance_conduction_side = sp.ln((innerBucket_radius + side) / innerBucket_radius) / (
+resistance_conduction_side_RW = sp.ln((innerBucket_radius + side) / innerBucket_radius) / (
     2 * sp.pi * innerBucket_height * conduction_rockwool
 )
 resistance_convection_side = 1 / (convection_side * 2 * sp.pi * outerBucket_radius * outerBucket_height)
-resistance_total_side = resistance_conduction_side + resistance_convection_side
+resistance_total_side = resistance_conduction_side_RW + resistance_convection_side
 
 lid = sp.Symbol("l")
 resistance_conduction_lid = lid / (
