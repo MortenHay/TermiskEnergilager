@@ -4,8 +4,10 @@ import pandas as pd
 df_vars = pd.DataFrame(columns=["var", "val"])
 
 df_vars.loc[len(df_vars)] = ["innerBucket_height", 0.142]  # m
+df_vars.loc[len(df_vars)] = ["outerBucket_height", 0.25]  # m
 df_vars.loc[len(df_vars)] = ["conduction_rockwool", 35e-3]  # W/mK
 df_vars.loc[len(df_vars)] = ["conduction_glasswool", 37e-3] #W/mK
+df_vars.loc[len(df_vars)] = ["conduction_PP", 0.11]  # J/(kg*K)
 df_vars.loc[len(df_vars)] = ["convection_lid", 25]  # W(m2*K)
 df_vars.loc[len(df_vars)] = ["convection_side", 10]  # W(m2*K)
 df_vars.loc[len(df_vars)] = ["innerBucket_radius", (0.176+0.188)/4]  # m
