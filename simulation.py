@@ -22,7 +22,7 @@ specific_heat_water = df_vars.loc["specific_heat_water"]["val"]
 width_bucket = df_vars.loc["width_bucket"]["val"]
 
 # %% Resistance equation
-side = sp.Symbol("s")
+side = outerBucket_radius - innerBucket_radius
 resistance_conduction_side_RW = sp.ln(
     (innerBucket_radius + side) / innerBucket_radius
 ) / (2 * sp.pi * innerBucket_height * conduction_rockwool)
@@ -41,7 +41,7 @@ resistance_total_side = (
     + resistance_conduction_side_B2
 )
 
-lid = sp.Symbol("l")
+lid = 0.051
 resistance_conduction_lid_RW = lid / (
     conduction_rockwool * sp.pi * outerBucket_radius**2
 )
@@ -60,7 +60,7 @@ resistance_total_lid = (
     + resistance_conduction_lid_B2
 )
 
-bottom = sp.Symbol("b")
+bottom = 0.051
 resistance_conduction_bottom_RW = bottom / (
     conduction_rockwool * sp.pi * outerBucket_radius**2
 )
@@ -81,11 +81,11 @@ resistance_total_bottom = (
 
 
 def resistance_convection(deltaT):
-    h = 1.42 * ((deltaT / (outerBucket_height * 1000)) ** 0.25)
+    h = 1.42 * ((deltaT / (outerBucket_height)) ** 0.25)
     A = (
         2 * sp.pi * outerBucket_radius**2
         + 2 * sp.pi * outerBucket_radius * outerBucket_height
-    )
+    ).evalf()
     return 1 / (h * A)
 
 
@@ -96,10 +96,13 @@ def resistance_radiation(t1, t2):
 
 
 def resistance_total(tHigh, tLow):
-    resistance_conduction = 1 / (
-        1 / resistance_total_bottom
-        + 1 / resistance_total_lid
-        + 1 / resistance_total_side
+    resistance_conduction = (
+        1
+        / (
+            1 / resistance_total_bottom
+            + 1 / resistance_total_lid
+            + 1 / resistance_total_side
+        ).evalf()
     )
 
     resistance_outer = 1 / (
@@ -123,7 +126,10 @@ def heatTransfer(Tin, Tout, C):
     --------
     qx : Heat flow [W]
     """
-    qx = (Tout - Tin) / resistance_total(Tout, Tin)
+    if Tin == Tout:
+        return 0
+
+    qx = (Tout - Tin) / resistance_total(Tin, Tout)
     dT = qx / C
     return dT
 
@@ -168,21 +174,18 @@ def eulersMethod(de, x0: float, y0: float, h: float, xn: float, *args):
 # %% Main code
 
 # Thermal resistance and heat capacity for simulation'
-lid = 0.051
-side = outerBucket_radius - innerBucket_radius
-bottom = 0.051
 
 mass_water = 3.21  # kg
 heat_capacity = specific_heat_water * mass_water
 
 # Simulation
 start_time = 0
-step_size = 10  # s
-end_time = 60 * 60 * 24 * 5  # s
+step_size = 120  # s
+end_time = 60 * 60 * 72  # s
 outside_temperature = 23.4  # C
 start_temperature = outside_temperature  # C
 voltage = 30  # V
-amperage = 6  # A
+amperage = 6.2  # A
 switchTime = 47.5 * 60  # s
 
 t, T = eulersMethod(
