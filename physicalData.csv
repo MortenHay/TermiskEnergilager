@@ -1,9 +1,12 @@
 var,val
-innerBucket_height,0.14
+innerBucket_height,0.142
+outerBucket_height,0.25
 conduction_rockwool,0.035
 conduction_glasswool,0.037
+conduction_PP,0.11
 convection_lid,25.0
 convection_side,10.0
-innerBucket_radius,0.085
+innerBucket_radius,0.091
+outerBucket_radius,0.136
 convection_bottom,5.0
 specific_heat_water,4180.0
