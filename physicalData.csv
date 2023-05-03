@@ -10,3 +10,4 @@ innerBucket_radius,0.091
 outerBucket_radius,0.136
 convection_bottom,5.0
 specific_heat_water,4180.0
+width_bucket,0.0007
