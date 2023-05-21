@@ -1,7 +1,7 @@
 var,val
 innerBucket_height,0.142
 outerBucket_height,0.25
-conduction_rockwool,0.035
+conduction_rockwool,0.037
 conduction_glasswool,0.037
 conduction_PP,0.11
 convection_lid,25.0
